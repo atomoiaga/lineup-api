@@ -8,13 +8,13 @@ import { InjectModel } from '@nestjs/mongoose';
 @Injectable()
 export class ArtistService {
   constructor(@InjectModel(Artist.name) private model: Model<Artist>) {}
-  create(createArtistDto: CreateArtistDto) {
+  async create(createArtistDto: CreateArtistDto): Promise<Artist> {
     const createdArtist = new this.model(createArtistDto);
     return createdArtist.save();
   }
 
-  findAll() {
-    return `This action returns all artist`;
+  async findAll(): Promise<Artist[]> {
+    return this.model.find().exec();
   }
 
   findOne(id: number) {
