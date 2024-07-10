@@ -1,3 +1,6 @@
+import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
+import { HydratedDocument } from 'mongoose';
+
 export enum StageEnum {
   STAGE_1 = 'stage_1',
   STAGE_2 = 'stage_2',
@@ -15,17 +18,35 @@ export enum GenreEnum {
 }
 
 export class Links {
+  @Prop()
   instagram?: string;
+  @Prop()
   facebook?: string;
+  @Prop()
   website?: string;
+  @Prop()
   twitter?: string;
+  @Prop()
   youtube?: string;
 }
 
+@Schema()
 export class Artist {
+  @Prop()
   name: string;
+
+  @Prop()
   genre: GenreEnum;
+
+  @Prop()
   stage: StageEnum;
+
+  @Prop()
   links: Links;
+
+  @Prop()
   performance_date: string;
 }
+
+export type ArtistDocument = HydratedDocument<Artist>;
+export const ArtistSchema = SchemaFactory.createForClass(Artist);
