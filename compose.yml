@@ -1,0 +1,46 @@
+version: "3"
+
+services:
+  client:
+    build: ./client
+    restart: always
+    environment:
+      - BACKEND_URL=http://localhost:3000
+    ports:
+      - "4000:3000"
+    networks:
+      - frontend
+    depends_on:
+      - api
+
+  api:
+    build: ./api
+    restart: always
+    ports:
+      - "3000:3000"
+    networks:
+      - backend
+      - frontend
+    environment:
+      - DATABASE_URL=mongodb://db:27017/line-up
+    depends_on:
+      - db
+    volumes:
+      - ./api:/usr/src/app
+
+  db:
+    image: mongo:latest
+    restart: always
+    expose:
+      - "27017"
+    volumes:
+      - mongo_data:/data/db
+    networks:
+      - backend
+
+networks:
+  backend: {}
+  frontend: {}
+
+volumes:
+  mongo_data: {}

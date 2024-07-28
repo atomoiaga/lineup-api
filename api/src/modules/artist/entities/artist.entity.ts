@@ -45,7 +45,7 @@ export class Artist {
   links: Links;
 
   @Prop()
-  performance_date: string;
+  description: string;
 }
 
 export type ArtistDocument = HydratedDocument<Artist>;
